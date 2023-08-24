@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebSocket Message Sender</title>
+</head>
+<body>
+    <h1>WebSocket Message Sender</h1>
+    
+    <!-- ... your HTML content ... -->
+
+<button id="sendButton1">Send Message 1</button>
+<button id="sendButton2">Send Message 2</button>
+
+<script>
+    const ws = new WebSocket('ws://localhost:8080');
+
+    // ... other WebSocket connection code ...
+
+    document.getElementById('sendButton1').addEventListener('click', () => {
+        sendMessageToUnity('Message from Button 1');
+    });
+
+    document.getElementById('sendButton2').addEventListener('click', () => {
+        sendMessageToUnity('Message from Button 2');
+    });
+
+    function sendMessageToUnity(message) {
+        if (ws.readyState === WebSocket.OPEN) {
+            ws.send(message);
+            console.log('Message sent to Unity:', message);
+        } else {
+            console.log('WebSocket not open.');
+        }
+    }
+
+    ws.onmessage('message', (message) => {
+        console.log('Message from Unity:', message);
+    })
+</script>
+
+</body>
+</html>
